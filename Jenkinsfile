@@ -20,8 +20,16 @@ node {
 
         stage('Test') 
         {
-            //sh 'mvn test'
-            sh 'ipconfig' 
+            steps {
+                //sh 'mvn test'
+                sh 'echo "test"'
+            }
+            post {
+                always {
+                    //junit 'target/surefire-reports/*.xml'
+                    sh 'echo "test"'
+                }
+            }
         }
 
         stage('Deliver') 
