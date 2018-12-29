@@ -18,10 +18,32 @@ node {
             sh 'mvn -B -DskipTests clean package'  
           }
 
-        
-
-        stage('Deliver') 
-          {
-                sh 'bash ./jenkins/deliver.sh'
+    stage('deploy') {
+      steps {
+        script {
+            openshift.withCluster() {
+                openshift.withProject() {
+                  def rm = openshift.selector("dc", templateName).rollout()
+                  timeout(5) { 
+                    openshift.selector("dc", templateName).related('pods').untilEach(1) {
+                      return (it.object().status.phase == "Running")
+                    }
+                  }
+                }
+            }
         }
+      }
+    }
+    stage('tag') {
+      steps {
+        script {
+            openshift.withCluster() {
+                openshift.withProject() {
+                  openshift.tag("${templateName}:latest", "${templateName}-staging:latest") 
+                }
+            }
+        }
+      }
+    }
+  }
 }
