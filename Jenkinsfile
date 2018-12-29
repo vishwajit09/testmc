@@ -18,31 +18,16 @@ node {
             sh 'mvn -B -DskipTests clean package'  
           }
 
-    stage('deploy') {
-      steps {
-        script {
-            openshift.withCluster() {
-                openshift.withProject() {
-                  def rm = openshift.selector("dc", templateName).rollout()
-                  timeout(5) { 
-                    openshift.selector("dc", templateName).related('pods').untilEach(1) {
-                      return (it.object().status.phase == "Running")
-                    }
-                  }
-                }
+    stages {
+        stage('Deploy') {
+            when {
+              expression {
+                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+              }
+            }
+            steps {
+                sh 'make publish'
             }
         }
-      }
-    }
-    stage('tag') {
-      steps {
-        script {
-            openshift.withCluster() {
-                openshift.withProject() {
-                  openshift.tag("${templateName}:latest", "${templateName}-staging:latest") 
-                }
-            }
-        }
-      }
     }
   }
