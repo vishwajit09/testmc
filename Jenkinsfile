@@ -14,8 +14,7 @@ node {
 
       stage('Build') 
            {
-            sh 'uname -a'
-            sh 'mvn -B -DskipTests clean package'  
+           openshiftBuild(buildConfig:'myapp1',showBuildLogs :'true')  
           }
 
         stage('Deploy') {
