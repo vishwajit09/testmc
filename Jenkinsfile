@@ -18,14 +18,7 @@ node {
             sh 'mvn -B -DskipTests clean package'  
           }
 
-        stage('Test') 
-        {
-            steps {
-                //sh 'mvn test'
-                sh 'echo "test"'
-            }
-            
-        }
+        
 
         stage('Deliver') 
           {
