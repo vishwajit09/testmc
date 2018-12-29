@@ -18,7 +18,7 @@ node {
           }
 
         stage('Deploy') {
-            openshiftDeploy(deployementConfig: 'myapp1')
+            openshiftDeploy(deploymentConfig: 'myapp1')
         }
     
   }
