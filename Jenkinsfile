@@ -1,5 +1,5 @@
 try {
-             timeout(time: 20, unit: 'MINUTES') {
+             timeout(time: 5, unit: 'MINUTES') {
                 def appName="myapp1"
                 def project=""
                 node {
@@ -20,7 +20,7 @@ try {
                   stage("Build Image") {
                     unstash name:"war"
                     sh "oc start-build myapp1-docker --from-file=target/ROOT.war -n ${project}"
-                    timeout(time: 20, unit: 'MINUTES') {
+                    timeout(time: 5, unit: 'MINUTES') {
                       openshift.withCluster() {
                         openshift.withProject() {
                           def bc = openshift.selector('bc', "myapp1-docker")
