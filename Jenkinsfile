@@ -21,7 +21,7 @@ node {
         stage('Test') 
         {
             //sh 'mvn test'
-            sh 'ifconfig' 
+            sh 'ipconfig' 
         }
 
         stage('Deliver') 
