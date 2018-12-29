@@ -18,7 +18,6 @@ node {
             sh 'mvn -B -DskipTests clean package'  
           }
 
-    stages {
         stage('Deploy') {
             when {
               expression {
@@ -29,5 +28,5 @@ node {
                 sh 'make publish'
             }
         }
-    }
+    
   }
