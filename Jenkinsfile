@@ -19,10 +19,8 @@ node {
     
     stage('SonarQube analysis') {
     withSonarQubeEnv('sonarqube-server') {
-      // requires SonarQube Scanner for Gradle 2.1+
-      // It's important to add --info because of SONARJNKNS-281
-      sh './gradlew --info sonarqube'
-    }
+      sh 'mvn clean package sonar:sonar'
+    } // SonarQube taskId is automatically attached to the pipeline context
   }
 
         stage('Deploy') {
