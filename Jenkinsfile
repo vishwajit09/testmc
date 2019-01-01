@@ -17,6 +17,10 @@ node {
            openshiftBuild(buildConfig:'myapp1',showBuildLogs :'true')  
           }
     
+    stage('SCM') {
+    git 'https://github.com/foo/bar.git'
+  }
+    
     stage('SonarQube analysis') {
     withSonarQubeEnv('sonarqube-server') {
       sh 'mvn clean package sonar:sonar'
