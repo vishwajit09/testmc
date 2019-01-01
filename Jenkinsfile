@@ -30,7 +30,7 @@ node {
       error "Pipeline aborted due to quality gate failure: ${qg.status}"
     }
   }
-
+    }
         stage('Deploy') {
             openshiftDeploy(deploymentConfig: 'myapp1')
         }
